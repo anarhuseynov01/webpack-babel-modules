@@ -64,6 +64,7 @@ export class UI {
     }
 
     addEmployeeToUI(newEmp){
+        
             this.employeesList.innerHTML += `
                         <tr>
                             <td> ${newEmp.name} </td>
@@ -83,5 +84,10 @@ export class UI {
                             </td >
                         </tr>
             `
+    }
+
+
+    deleteEmployeeFromUI(element) {
+        element.remove();
     }
 }

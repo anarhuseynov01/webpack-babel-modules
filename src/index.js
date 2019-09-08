@@ -13,6 +13,8 @@ const update = document.querySelector("#update");
 const request = new Request("http://localhost:3000/employees");
 const ui = new UI();
 
+
+
 // request.get()
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
@@ -47,6 +49,7 @@ eventListeners();
 function eventListeners(){
     document.addEventListener('DOMContentLoaded',getAllEmployees);
     form.addEventListener('submit',addEmployee)
+    employeesList.addEventListener('click',UpdateOrDelete)
 }
 
 function getAllEmployees(){
@@ -83,4 +86,24 @@ function addEmployee(e){
 
     ui.clearInputs();
     e.preventDefault();
+}
+
+
+function UpdateOrDelete(e){
+    if(e.target.id === "delete-employee"){
+        deleteEmployee(e.target);
+    }
+    else if (e.target.id === "update-employee"){
+
+    }
+}
+
+
+function deleteEmployee(targetEmployee) {
+    const id = Number(targetEmployee.parentElement.previousElementSibling.previousElementSibling.textContent);
+    request.delete(id)
+    .then(message => {
+        ui.deleteEmployeeFromUI(targetEmployee.parentElement.parentElement);
+    })
+    .catch(err => console.log(err))
 }

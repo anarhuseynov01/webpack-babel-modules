@@ -42,7 +42,7 @@ export class Request {
     }
 
     async delete(id) {
-        const response = await fetch(this.url + "/" + id, {
+        const response = await fetch(this.url + '/' + id, {
             method: "DELETE",
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
