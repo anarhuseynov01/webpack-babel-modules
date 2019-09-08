@@ -1,5 +1,5 @@
 import {Request} from './request';
-
+import {UI} from './ui';
 
 // choose elements
 const form = document.querySelector('#employee-form');
@@ -11,6 +11,7 @@ const update = document.querySelector("#update");
 
 
 const request = new Request("http://localhost:3000/employees");
+const ui = new UI();
 
 // request.get()
 // .then(res => console.log(res))
@@ -37,3 +38,22 @@ const request = new Request("http://localhost:3000/employees");
 // request.delete(3)
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
+
+
+
+eventListeners();
+
+
+function eventListeners(){
+    document.addEventListener('DOMContentLoaded',getAllEmployees);
+}
+
+function getAllEmployees(){
+
+    request.get()
+    .then(employees => {
+        ui.addAllEmployeeToUI(employees)
+    })
+    .catch(err => console.log(err))
+
+}
