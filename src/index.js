@@ -46,6 +46,7 @@ eventListeners();
 
 function eventListeners(){
     document.addEventListener('DOMContentLoaded',getAllEmployees);
+    form.addEventListener('submit',addEmployee)
 }
 
 function getAllEmployees(){
@@ -56,4 +57,30 @@ function getAllEmployees(){
     })
     .catch(err => console.log(err))
 
+}
+
+
+function addEmployee(e){
+
+    const employeeName = nameInput.value.trim();
+    const employeeDepartment = department.value.trim();
+    const employeeSalary = salary.value.trim();
+
+
+    if(employeeName == "" || employeeDepartment == "" || employeeSalary == ""){
+        alert("Please enter all fields!");
+    }else {
+        request.post({
+            name: employeeName,
+            department: employeeDepartment,
+            salary: Number(employeeSalary)
+        })
+        .then(newemp => {
+            ui.addEmployeeToUI(newemp);
+        })
+        .catch(err => console.log(err))
+    }
+
+    ui.clearInputs();
+    e.preventDefault();
 }

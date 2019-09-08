@@ -55,4 +55,33 @@ export class UI {
 
             this.employeesList.innerHTML = result;
     }
+
+
+    clearInputs(){
+        this.nameInput.value = "";
+        this.department.value = "";
+        this.salary.value = "";
+    }
+
+    addEmployeeToUI(newEmp){
+            this.employeesList.innerHTML += `
+                        <tr>
+                            <td> ${newEmp.name} </td>
+
+                            <td> ${newEmp.department} </td>
+
+                            <td> ${newEmp.salary} </td>
+
+                            <td> ${newEmp.id} </td> 
+
+                            <td> 
+                                <a href = "#" id = "update-employee" class = "btn btn-danger" > Update </a>
+                            </td>
+
+                            <td>
+                                <a href = "#" id = "delete-employee" class = "btn btn-danger" > Delete </a>
+                            </td >
+                        </tr>
+            `
+    }
 }
