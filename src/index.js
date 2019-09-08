@@ -13,6 +13,7 @@ const update = document.querySelector("#update");
 const request = new Request("http://localhost:3000/employees");
 const ui = new UI();
 
+let updateState = null;
 
 
 // request.get()
@@ -48,8 +49,9 @@ eventListeners();
 
 function eventListeners(){
     document.addEventListener('DOMContentLoaded',getAllEmployees);
-    form.addEventListener('submit',addEmployee)
-    employeesList.addEventListener('click',UpdateOrDelete)
+    form.addEventListener('submit',addEmployee);
+    employeesList.addEventListener('click',UpdateOrDelete);
+    update.addEventListener('click',updateEmployee);
 }
 
 function getAllEmployees(){
@@ -110,4 +112,30 @@ function deleteEmployee(targetEmployee) {
 
 function updateEmployeeController(targetEmployee){
     ui.toggleUpdateButton(targetEmployee);
+
+    if(updateState === null){
+        updateState = {
+            updateId: Number(targetEmployee.children[3].textContent),
+            updateParent: targetEmployee
+        }
+    } else {
+        updateState = null;
+    }
+}
+
+function updateEmployee(){
+    if(updateState){
+            const data = {
+                name: nameInput.value.trim(),
+                department: department.value.trim(),
+                salary: Number(salary.value.trim())
+            }
+
+            request.put(updateState.updateId,data)
+            .then(updatedEmployee => {
+                ui.updateEmployeeOnUI(updatedEmployee,updateState.updateParent);
+                
+            })
+            .catch(err => console.log(err))
+    }
 }
